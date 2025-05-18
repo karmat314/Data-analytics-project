@@ -2,7 +2,7 @@ import pandas as pd
 from dash import html, dcc, Input, Output
 
 # Load data here or pass it from the main app
-df = pd.read_csv('../Rus-Ukr-Equipment/ukr-rus-equipment_cleaned.csv')
+df = pd.read_csv('./Rus-Ukr-Equipment/ukr-rus-equipment_cleaned.csv')
 df['Date'] = pd.to_datetime(df['Date'])
 
 

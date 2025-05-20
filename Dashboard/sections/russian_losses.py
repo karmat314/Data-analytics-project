@@ -14,7 +14,7 @@ officer_data = pd.DataFrame({
     "Count": [461, 1238, 1527, 941, 610, 290, 107, 7, 3, 0, 0, 171, 309, 347]
 }).sort_values(by="Count", ascending=False)
 
-df2 = pd.read_csv('./Russian soldier and civilian losses/Confirmed Russian losses in Ukraine per week.csv')
+df2 = pd.read_csv('../Russian soldier and civilian losses/Confirmed Russian losses in Ukraine per week.csv')
 df2['week_start'] = pd.to_datetime(df2['week_start'], format='%d.%m.%Y')
 df2_plot = df2.set_index('week_start')
 

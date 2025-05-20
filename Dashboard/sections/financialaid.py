@@ -6,7 +6,7 @@ from dash import dcc, html, Input, Output, callback
 from plotly.subplots import make_subplots
 
 # --- Load and Clean Dataset ---
-df = pd.read_csv('./Financial-aid/financialaid.csv')
+df = pd.read_csv('../Financial-aid/financialaid.csv')
 
 money_columns = [
     'tot_activity_value', 'tot_activity_value_EUR', 'tot_activity_value_constant_currency',

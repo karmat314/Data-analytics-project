@@ -6,8 +6,8 @@ from dash import html
 from matplotlib.ticker import FuncFormatter
 
 # Load the original data and forecast data
-df = pd.read_csv('./Rus-Ukr-Equipment/ukr-rus-equipment_cleaned.csv')
-forecast_df = pd.read_csv('./Rus-Ukr-Equipment/forecast.csv')
+df = pd.read_csv('../Rus-Ukr-Equipment/ukr-rus-equipment_cleaned.csv')
+forecast_df = pd.read_csv('../Rus-Ukr-Equipment/forecast.csv')
 
 # Convert dates to datetime
 df['Date'] = pd.to_datetime(df['Date'])

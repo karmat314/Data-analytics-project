@@ -3,8 +3,8 @@ from dash import dcc, html
 import pandas as pd
 
 # Load data
-df_russia = pd.read_csv('./Rus-Ukr-Economy/russia_eco_indicators.csv', skiprows=4)
-df_ukraine = pd.read_csv('./Rus-Ukr-Economy/ukr_eco_indicators.csv', skiprows=4)
+df_russia = pd.read_csv('../Rus-Ukr-Economy/russia_eco_indicators.csv', skiprows=4)
+df_ukraine = pd.read_csv('../Rus-Ukr-Economy/ukr_eco_indicators.csv', skiprows=4)
 
 indicators_to_keep = [
     'GDP (current US$)',

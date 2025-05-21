@@ -1,10 +1,13 @@
 import pandas as pd
-from dash import html, dcc, Input, Output
+from dash import Dash, html, dcc, Input, Output
+import plotly.graph_objs as go
 
-# Load data here or pass it from the main app
+# Load data
 df = pd.read_csv('../Rus-Ukr-Equipment/ukr-rus-equipment_cleaned.csv')
 df['Date'] = pd.to_datetime(df['Date'])
 
+# Calculate smoothed ratio column with 7-day rolling average (centered)
+df['Ratio_RU_UA_Smoothed'] = df['Ratio RU/UA'].rolling(window=7, center=True).mean()
 
 equipment_layout = html.Div([
     html.H2("Equipment Destroyed Over Time"),
@@ -14,7 +17,7 @@ equipment_layout = html.Div([
         min=0,
         max=len(df) - 1,
         value=0,
-        marks = {i: df['Date'].dt.strftime('%Y-%m-%d').iloc[i] for i in range(0, len(df), max(1, len(df)//10))},
+        marks={i: df['Date'].dt.strftime('%Y-%m-%d').iloc[i] for i in range(0, len(df), max(1, len(df)//10))},
         step=1
     ),
     
@@ -61,9 +64,12 @@ equipment_layout = html.Div([
         ], style={'text-align': 'center'}),
         html.Div(id='ukraine-total-destroyed', style={'textAlign': 'center', 'fontSize': '20px', 'marginTop': '10px'}),
     ]),
+    
+    # Ratio plot
+    html.Div([
+        dcc.Graph(id='loss-ratio-graph')
+    ], style={'marginTop': '50px'})
 ])
-
-
 
 def register_callbacks(app):
     @app.callback(
@@ -102,3 +108,33 @@ def register_callbacks(app):
             f"Artillery Destroyed: {u_artillery}",
             f"Total Equipment Destroyed: {u_total}",
         )
+
+    @app.callback(
+        Output('loss-ratio-graph', 'figure'),
+        Input('date-slider', 'value')  # Input here to trigger update if needed
+    )
+    def update_loss_ratio(_):
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            x=df['Date'], 
+            y=df['Ratio_RU_UA_Smoothed'], 
+            mode='lines', 
+            name='Smoothed Ratio', 
+            line=dict(color='purple')
+        ))
+        fig.add_hline(
+            y=1, 
+            line_dash='dash', 
+            line_color='black', 
+            annotation_text='1:1 Ratio', 
+            annotation_position='top left'
+        )
+        fig.update_layout(
+            title='Ratio of Russian to Ukrainian Equipment Losses Over Time (Smoothed)',
+            xaxis_title='Date',
+            yaxis_title='Loss Ratio',
+            height=600,
+            template='plotly_white',
+            margin=dict(l=40, r=40, t=60, b=40)
+        )
+        return fig

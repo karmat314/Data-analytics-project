@@ -1,0 +1,7 @@
+,Area,Fatalities,Time period,Source,Start_Date,End_Date,Duration_Days,Fatalities_Norm,Duration_Norm
+0,Donetsk People's Republic ,3440,26 February 2022 – 22 December 2024,Donetsk PR,2022-02-26,2024-12-22,1031.0,1.0,0.9905123339658444
+1,Luhansk People's Republic,972,17 February 2022 – 28 December 2023,Luhansk PR,2022-02-17,2023-12-28,680.0,0.2815138282387191,0.32447817836812143
+2,Russian-annexed Kherson Oblast,41,6 June 2023,Russia,2023-06-06,,,0.010480349344978166,
+3,Republic of Crimea,8,24 February 2022 – 17 July 2023,Russia,2022-02-24,2023-07-17,509.0,0.0008733624454148473,0.0
+4,Sevastopol,5,23 June 2024,Russia,2024-06-23,,,0.0,
+5,Western Russia,394,24 February 2022 – 25 December 2024,,2022-02-24,2024-12-25,1036.0,0.11324599708879186,1.0

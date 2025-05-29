@@ -1,0 +1,4 @@
+Model,RMSE (Russia),MAE (Russia),R² (Russia),RMSE (Ukraine),MAE (Ukraine),R² (Ukraine)
+Linear Regression,248.8,241.64,-0.71,505.67,503.33,-22.35
+Random Forest,421.95,376.75,-3.93,251.81,229.03,-4.79
+ARIMA,173.02,156.42,0.17,65.35,62.87,0.61

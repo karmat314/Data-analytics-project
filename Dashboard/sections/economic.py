@@ -1,4 +1,3 @@
-# === sections/economic.py ===
 from dash import dcc, html
 import pandas as pd
 
@@ -30,13 +29,25 @@ def prepare_df(df):
 df_russia = prepare_df(df_russia)
 df_ukraine = prepare_df(df_ukraine)
 
+# Add country label
 df_russia['Country'] = 'Russia'
 df_ukraine['Country'] = 'Ukraine'
 df_all = pd.concat([df_russia, df_ukraine])
 df_all_melted = df_all.melt(id_vars=['Year', 'Country'], var_name='Indicator', value_name='Value')
 
+# === Calculate GDP Growth Percentage Drop for 2022 ===
+def gdp_drop(df, country_name):
+    gdp_2021 = df.loc[df['Year'] == 2021, 'GDP growth (annual %)'].values[0]
+    gdp_2022 = df.loc[df['Year'] == 2022, 'GDP growth (annual %)'].values[0]
+    drop = ((gdp_2021 - gdp_2022) / abs(gdp_2021)) * 100
+    return round(drop, 2)
+
+russia_drop = gdp_drop(df_russia, 'Russia')
+ukraine_drop = gdp_drop(df_ukraine, 'Ukraine')
+
 economic_layout = html.Div([
     html.H2("Economic Indicators", style={'textAlign': 'center'}),
+    
     html.Label("Select Economic Indicator:"),
     dcc.Dropdown(
         id='indicator-dropdown',
@@ -45,5 +56,14 @@ economic_layout = html.Div([
         clearable=False,
         style={'width': '60%'}
     ),
+
+    html.Br(),
+
+    html.Div([
+        html.H4("GDP Growth Drop in 2022", style={'textAlign': 'center'}),
+        html.P(f"Russia: {russia_drop}% decrease", style={'textAlign': 'center'}),
+        html.P(f"Ukraine: {ukraine_drop}% decrease", style={'textAlign': 'center'}),
+    ], style={'marginTop': '20px'}),
+
     dcc.Graph(id='indicator-lineplot', style={'height': '600px'})
 ])
